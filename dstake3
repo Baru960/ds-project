@@ -63,9 +63,9 @@ int isFlightIDValid(int flightID)
     while (t != NULL)
     {
         if (t->flightID == flightID)
-            {
-				return 1;
-			}
+        {
+	   return 1;
+	}
         t = t->next;
     }
     return 0; 
@@ -77,9 +77,9 @@ int isReservationIDValid(int reservationID)
     while (t != NULL)
     {
         if (t->reservationID == reservationID)
-            {
-				return 1;
-			}
+        {
+	   return 1;
+	}
         t = t->next;
     }
     return 0; 

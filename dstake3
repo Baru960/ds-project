@@ -236,9 +236,9 @@ void displayBookings()
     }   
 }
 
-int main()
-{   
-    char choice1='y';
+void final()
+{
+	char choice1='y';
     char choice2;
     int reservationID;
     createFlight();
@@ -271,5 +271,9 @@ int main()
 
     enqueueBooking();
     displayBookings();
+}
+int main()
+{   
+    final();
     return 0;
 }

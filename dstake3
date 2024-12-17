@@ -238,7 +238,7 @@ void displayBookings()
 
 void final()
 {
-	char choice1='y';
+    char choice1='y';
     char choice2;
     int reservationID;
     createFlight();

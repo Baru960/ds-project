@@ -63,9 +63,9 @@ int isFlightIDValid(int flightID)
     while (t != NULL)
     {
         if (t->flightID == flightID)
-        {
-	   return 1;
-	}
+            {
+				return 1;
+			}
         t = t->next;
     }
     return 0; 
@@ -77,9 +77,9 @@ int isReservationIDValid(int reservationID)
     while (t != NULL)
     {
         if (t->reservationID == reservationID)
-        {
-	   return 1;
-	}
+            {
+				return 1;
+			}
         t = t->next;
     }
     return 0; 
@@ -178,17 +178,18 @@ void displayReservations()
 
 void payment(int reservationID)
 {
-    if (!isReservationIDValid(reservationID)) {
+    if (isReservationIDValid(reservationID)==0) 
+	{
         printf("Invalid Reservation ID. Please try again.\n");
         return;
     }
-
     struct reservation *t=firstReservation;
     while(t!=NULL && t->reservationID!=reservationID)
     {
         t=t->next;
     }
-    if (t != NULL) {
+    if (t != NULL) 
+	{
         t->paymentStatus=1;
         printf("Your booking for the reservation ID %d has been confirmed\n",reservationID);
     }
@@ -236,11 +237,39 @@ void displayBookings()
     }   
 }
 
+void specificReservationID(int reservationID)
+{
+	struct reservation *t=firstReservation;
+    printf("Your details:\n");
+    while(t!=NULL && t->reservationID!=reservationID)
+    {
+        t=t->next;
+    }
+    if(t->paymentStatus==1)
+        {
+            printf("Reservation ID: %d,Flight ID: %d,Passenger Name: %s,Payment status: Paid\n",t->reservationID,t->flightID,t->passengerName);
+        }
+        else 
+        {
+            printf("Reservation ID: %d,Flight ID: %d,Passenger Name: %s,Payment status: Not paid\n",t->reservationID,t->flightID,t->passengerName);
+        }
+}
+
+void specificBookingID(int bookingID)
+{
+	struct bookingRequest *t=front;
+    printf("\nBookings list:\n");
+    while(t!=NULL && t->bookingID!=bookingID)
+    {
+        t=t->next;
+    }   
+    printf("Booking ID: %d,Flight ID: %d,Passenger Name: %s\n",t->bookingID,t->flightID,t->passengerName);
+}
 void final()
 {
-    char choice1='y';
-    char choice2;
-    int reservationID;
+	char choice1='y';
+    char choice2,choice3,choice4;
+    int reservationID,inputID;
     createFlight();
     displayFlights();
     do 
@@ -268,9 +297,38 @@ void final()
             payment(reservationID);
         }
     } while (choice2 != 'N' && choice2 != 'n');
-
-    enqueueBooking();
-    displayBookings();
+    printf("\nDo you want to check your reservation details?(Y/N)");
+    scanf(" %c",&choice3);
+    if(choice3=='Y' || choice3=='y')
+    {
+    	do
+		{
+			printf("Enter the reservation id:");
+    		scanf("%d",&inputID);
+    		if (isReservationIDValid(inputID)==0)
+                    {
+						printf("Invalid Reservation ID. Please try again.\n");
+					}
+		}while(isReservationIDValid(inputID)!=1);
+    	specificReservationID(inputID);
+    	struct reservation *t=firstReservation;
+    	while(t!=NULL && t->reservationID!=inputID)
+    	{
+        	t=t->next;
+    	}
+    	if(t->paymentStatus==0)
+    	{	
+    		printf("Would you like to make yur payment to confirm your booking?(Y/N)");
+    		scanf(" %c",&choice4);
+    		if(choice4=='Y' || choice4=='y')
+    		{
+				payment(inputID);
+			}
+		}
+    } 
+	enqueueBooking();
+    displayBookings();	
+	
 }
 int main()
 {   

@@ -306,8 +306,6 @@ void final()
             payment(reservationID);
         }
     } while (choice2 != 'N' && choice2 != 'n');
-    enqueueBooking();
-    displayBookings();
     printf("\nDo you want to check your reservation details?(Y/N)");
     scanf(" %c",&choice3);
     if(choice3=='Y' || choice3=='y')
